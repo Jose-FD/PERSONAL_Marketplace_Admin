@@ -1,0 +1,12 @@
+# Protege todos los directorios internos del sistema
+Options All -Indexes
+
+# Activa la opción de multi vistas
+Options -MultiViews
+
+# Activa el engine de reescritura para poder colocar una condición de reescritura
+# - Que diga que todo lo que encuentre en los requerimientos de la URL lo redirija al index.php
+RewriteEngine On
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ index.php [QSA,L]
