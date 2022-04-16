@@ -20,7 +20,7 @@
                     TODO: Validar primero que la categoría no tenga productos
                 ================================================================*/
 
-                if($this->table == "categories" || $this->table == "subcategories"){
+                if($this->table == "categories" || $this->table == "subcategories" || $this->table == "stores"){
 
                     $url = "products?select=id_product&linkTo=id_".$this->suffix."_product&equalTo=".$security[0];
                     $method = "GET";

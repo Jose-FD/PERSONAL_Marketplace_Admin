@@ -84,6 +84,34 @@
 	
         }
 
+        /*================================================================
+            TODO: Promediar reseñas
+        ================================================================*/
+
+        static public function averageReviews($reviews){
+
+            $totalReviews = 0;
+
+            if($reviews != null){
+
+                foreach ($reviews as $key => $value) {
+
+                    $totalReviews += $value["review"];
+
+                }
+
+            return round($totalReviews/count($reviews));
+
+            }else{
+
+                return 0;
+
+            }
+
+        }
+
+
+
 
     }
 

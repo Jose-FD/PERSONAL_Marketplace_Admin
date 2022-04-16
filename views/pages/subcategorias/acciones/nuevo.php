@@ -73,7 +73,7 @@
                                 class="form-control select2"
                                 name="category-subcategory"
                                 style="width:100%"
-                                onchange="changeCategory(event)"
+                                onchange="changeCategory(event, 'subcategories')"
                                 required>
 
                                 <option value="">Seleccionar categoria</option>

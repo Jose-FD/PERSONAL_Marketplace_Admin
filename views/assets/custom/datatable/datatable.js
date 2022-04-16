@@ -100,6 +100,81 @@ if($(".tableSubcategories").length > 0){
 }
 
 /*=====================================================================
+    TODO: Validamos tabla de Tiendas
+=====================================================================*/
+
+if($(".tableStores").length > 0){
+
+    var url = "ajax/data-stores.php?text="+text+"&between1="+$("#between1").val()+"&between2="+$("#between2").val()+"&token="+localStorage.getItem("token_user")+"&idAdmin="+$("#idAdmin").val();
+
+    var columns = [
+        {"data": "id_store"},
+        {"data": "logo_store", "orderable":false},
+        {"data": "name_store"},
+        {"data": "url_store"},
+        {"data": "displayname_user"},
+        {"data": "cover_store", "orderable":false},
+        {"data": "abstract_store", "orderable":false},
+        {"data": "email_store"},
+        {"data": "country_store"},
+        {"data": "city_store"},
+        {"data": "address_store"},
+        {"data": "phone_store"},
+        {"data": "socialnetwork_store", "orderable":false},
+        {"data": "products_store"},
+        {"data": "date_created_store"},
+        {"data": "actions", "orderable":false}
+    ];
+
+    page = "tiendas";
+
+}
+
+/*=====================================================================
+    TODO: Validamos tabla de Productos
+=====================================================================*/
+
+if($(".tableProducts").length > 0){
+
+    var url = "ajax/data-products.php?text="+text+"&between1="+$("#between1").val()+"&between2="+$("#between2").val()+"&token="+localStorage.getItem("token_user")+"&idAdmin="+$("#idAdmin").val();
+
+    var columns = [
+        { "data": "id_product" },
+        { "data": "actions", "orderable": false  },
+        { "data": "feedback", "orderable": false },
+        { "data": "state", "orderable": false },
+        { "data": "name_store" },
+        { "data": "image_product", "orderable": false  },
+        { "data": "name_product" },
+        { "data": "name_category" },
+        { "data": "name_subcategory" },
+        { "data": "price_product" },
+        { "data": "shipping_product" },
+        { "data": "stock_product" },
+        { "data": "delivery_time_product" },
+        { "data": "offer_product", "orderable": false   } ,
+        { "data": "summary_product", "orderable": false   },
+        { "data": "specifications_product", "orderable": false   },
+        { "data": "details_product", "orderable": false   },
+        { "data": "description_product", "orderable": false   },
+        { "data": "gallery_product", "orderable": false   },
+        { "data": "top_banner_product", "orderable": false   },
+        { "data": "default_banner_product", "orderable": false   },
+        { "data": "horizontal_slider_product", "orderable": false   },
+        { "data": "vertical_slider_product", "orderable": false   },
+        { "data": "video_product", "orderable": false   },
+        { "data": "tags_product", "orderable": false   },
+        { "data": "views_product"  },
+        { "data": "sales_product" },
+        { "data": "reviews_product", "orderable": false },
+        { "data": "date_created_product" }
+    ];
+
+    page = "productos";
+
+}
+
+/*=====================================================================
     TODO: Ejecutamos DataTable
 =====================================================================*/
 
@@ -344,3 +419,4 @@ $(document).on("click",".removeItem",function(){
 
     })
 })
+

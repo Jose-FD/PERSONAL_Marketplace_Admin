@@ -7,7 +7,26 @@
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="/">Home</a></li>
-                    <li class="breadcrumb-item active">Productos</li>
+
+                    <?php
+
+                        if(isset($routesArray[2])){
+
+                            if($routesArray[2] == "nuevo" || $routesArray[2] == "editar"){
+
+                                echo '<li class="breadcrumb-item"><a href="/productos">Productos</a></li>';
+                                echo '<li class="breadcrumb-item active">'.$routesArray[2].'</li>';
+
+                            }
+
+                        }else{
+
+                            echo '<li class="breadcrumb-item active">Productos</li>';
+
+                        }
+
+                    ?>
+
                 </ol>
             </div>
         </div>
@@ -15,37 +34,28 @@
 </section>
 
 <!-- Main content -->
-<section class="content">
+<section class="content pb-1">
 
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-12">
-                <!-- Default box -->
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">Title</h3>
 
-                        <div class="card-tools">
-                            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                                <i class="fas fa-minus"></i>
-                            </button>
-                            <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        Start creating your amazing application!
-                    </div>
-                    <!-- /.card-body -->
-                    <div class="card-footer">
-                        Footer
-                    </div>
-                    <!-- /.card-footer-->
-                </div>
-                <!-- /.card -->
-            </div>
-        </div>
+    <?php
+
+        if(isset($routesArray[2])){
+
+            if($routesArray[2] == "nuevo" || $routesArray[2] == "editar"){
+
+                include "acciones/".$routesArray[2].".php";
+            }
+
+        }else{
+
+            include "acciones/listar.php";
+
+        }
+
+    ?>
+
     </div>
+
 </section>
 <!-- /.content -->

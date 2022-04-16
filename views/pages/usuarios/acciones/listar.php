@@ -34,7 +34,8 @@
 
                 <div class="input-group">
                     <button type="button" class="btn float-right" id="daterange-btn">
-                        <i class="far fa-calendar-alt mr-2"></i> <?php echo $between1 ?> - <?php echo $between2 ?>
+                        <i class="far fa-calendar-alt mr-2"></i>
+                        <?php echo $between1 ?> - <?php echo $between2 ?>
                         <i class="fas fa-caret-down ml-2"></i>
                     </button>
                 </div>

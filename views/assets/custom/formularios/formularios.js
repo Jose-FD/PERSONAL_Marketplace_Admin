@@ -54,7 +54,7 @@ function validateRepeat(event, type, table, suffix) {
 
                 validateJS(event, type);
 
-                if (table == "categories" || table == "subcategories") {
+                if (table == "categories" || table == "subcategories" || table == "stores") {
 
                     createUrl(event, "url-" + suffix);
 
@@ -77,6 +77,10 @@ function validateJS(event, type) {
     var pattern;
 
     if (type == "text") pattern = /^[A-Za-zñÑáéíóúÁÉÍÓÚ ]{1,}$/;
+
+    if(type == "text&number") pattern = /^[0-9A-Za-zñÑáéíóúÁÉÍÓÚ ]{1,50}$/;
+
+    if(type == "numbers") pattern = /^[.\\,\\0-9]{1,}$/;
 
     if (type == "t&n") pattern = /^[A-Za-z0-9]{1,}$/;
 
@@ -244,49 +248,121 @@ if ($('.tags-input').length > 0) {
     TODO: Traer subcategorias de acuerdo a la categoría
 ================================================================*/
 
-function changeCategory(event) {
+function changeCategory(event, type) {
 
-    $(".titleList").show();
+    if(type == "subcategories"){
 
-    var idCategory = event.target.value;
+        var idCategory = event.target.value;
 
-    var data = new FormData();
-    data.append("data", idCategory);
-    data.append("select", "title_list_category");
-    data.append("table", "categories");
-    data.append("suffix", "id_category");
+        $(".titleList").show();
 
-    $.ajax({
-        url: "ajax/ajax-select.php",
-        method: "POST",
-        data: data,
-        contentType: false,
-        cache: false,
-        processData: false,
-        success: function (response) {
+        var idCategory = event.target.value;
 
-            var arrayResponse = JSON.parse(response);
+        var data = new FormData();
+        data.append("data", idCategory);
+        data.append("select", "title_list_category");
+        data.append("table", "categories");
+        data.append("suffix", "id_category");
 
-            if (arrayResponse["status"] == 200) {
+        $.ajax({
+            url: "ajax/ajax-select.php",
+            method: "POST",
+            data: data,
+            contentType: false,
+            cache: false,
+            processData: false,
+            success: function (response) {
 
-                var optTitleList = $(".optTitleList");
+                var arrayResponse = JSON.parse(response);
 
-                optTitleList.each(i => {
+                if (arrayResponse["status"] == 200) {
 
-                    $(optTitleList[i]).remove();
+                    var optTitleList = $(".optTitleList");
 
-                })
+                    optTitleList.each(i => {
 
-                JSON.parse(arrayResponse["results"][0]["title_list_category"]).forEach(value => {
+                        $(optTitleList[i]).remove();
 
-                    $('[name="titleList-subcategory"]').append(`<option class="optTitleList" value="` + value + `">` + value + `</option>`)
+                    })
 
-                });
+                    JSON.parse(arrayResponse["results"][0]["title_list_category"]).forEach(value => {
+
+                        $('[name="titleList-subcategory"]').append(`<option class="optTitleList" value="` + value + `">` + value + `</option>`)
+
+                    });
+
+                }
 
             }
 
-        }
+        })
 
-    })
+    }
+
+    if(type == "products"){
+
+        var idCategory = event.target.value.split("_")[0];
+
+        $(".selectSubcategory").show();
+
+        var idCategory = event.target.value;
+
+        var data = new FormData();
+        data.append("data", idCategory);
+        data.append("select", "id_subcategory,name_subcategory,title_list_subcategory");
+        data.append("table", "subcategories");
+        data.append("suffix", "id_category_subcategory");
+
+        $.ajax({
+            url: "ajax/ajax-select.php",
+            method: "POST",
+            data: data,
+            contentType: false,
+            cache: false,
+            processData: false,
+            success: function (response) {
+
+                var arrayResponse = JSON.parse(response);
+
+                if (arrayResponse["status"] == 200) {
+
+                    var optSubcategory = $(".optSubcategory");
+
+                    optSubcategory.each(i => {
+
+                        $(optSubcategory[i]).remove();
+
+                    })
+
+                    arrayResponse["results"].forEach(value=>{
+
+                        $('[name="name-subcategory"]').append(`<option class="optSubcategory" value="`+value.id_subcategory+`_`+value.title_list_subcategory+`">`+value.name_subcategory+`</option>`)
+
+                    })
+                }
+
+            }
+
+        })
+
+    }
 
 }
+
+/*================================================================
+    TODO: Traer subcategorias de acuerdo a la categoría
+================================================================*/
+
+$(".summernote").summernote({
+
+    placeholder:'',
+    tabsize: 2,
+    height: 400,
+    toolbar:[
+        ['misc', ['codeview', 'undo', 'redo']],
+        ['style', ['bold', 'italic', 'underline', 'clear']],
+        ['para', ['style', 'ul', 'ol', 'paragraph', 'height']],
+        ['insert', ['link','picture', 'hr']]
+    ]
+
+});
