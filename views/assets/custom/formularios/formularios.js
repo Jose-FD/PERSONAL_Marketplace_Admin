@@ -54,7 +54,7 @@ function validateRepeat(event, type, table, suffix) {
 
                 validateJS(event, type);
 
-                if (table == "categories" || table == "subcategories" || table == "stores") {
+                if (table == "categories" || table == "subcategories" || table == "stores" || table == "products") {
 
                     createUrl(event, "url-" + suffix);
 
@@ -236,13 +236,18 @@ function createUrl(event, name) {
     TODO: Tags Input
 ================================================================*/
 
-if ($('.tags-input').length > 0) {
+function fncTagInput(){
 
-    $('.tags-input').tagsinput({
-        maxTags: 10
-    });
+    if ($('.tags-input').length > 0) {
 
+        $('.tags-input').tagsinput({
+            maxTags: 10
+        });
+
+    }
 }
+
+fncTagInput();
 
 /*================================================================
     TODO: Traer subcategorias de acuerdo a la categoría
@@ -350,7 +355,7 @@ function changeCategory(event, type) {
 }
 
 /*================================================================
-    TODO: Traer subcategorias de acuerdo a la categoría
+    TODO: Plugin Summernote
 ================================================================*/
 
 $(".summernote").summernote({
@@ -366,3 +371,325 @@ $(".summernote").summernote({
     ]
 
 });
+
+/*================================================================
+    TODO: Adicionar Entradas al formulario de Productos
+================================================================*/
+
+function addInput(elem, type){
+
+    var inputs = $("."+type);
+
+    if(inputs.length < 5){
+
+        if(type == "inputSummary"){
+
+            $(elem).before(`
+
+                <div class="input-group mb-3 inputSummary">
+
+                    <div class="input-group-append">
+                        <span class="input-group-text">
+                            <button type="button" class="btn btn-danger btn-sm border-0" onclick="removeInput(`+inputs.length+`,'inputSummary')">&times;</button>
+                        </span>
+                    </div>
+
+                    <input
+                        class="form-control py-4"
+                        type="text"
+                        name="summary-product_`+inputs.length+`"
+                        pattern='[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\"\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,}'
+                        onchange="validateJS(event,'regex')"
+                        required>
+
+                    <div class="valid-feedback">Campo Valido.</div>
+                    <div class="invalid-feedback">Por favor rellene este campo.</div>
+
+                </div>
+
+
+            `)
+
+        }
+
+        if(type == "inputDetails"){
+
+            $(elem).before(`
+
+            <div class="row mb-3 inputDetails">
+
+                <div class="col-12 col-lg-6 input-group">
+
+                    <div class="input-group-append">
+                        <span class="input-group-text">
+                        <button type="button" class="btn btn-danger btn-sm border-0" onclick="removeInput(`+inputs.length+`,'inputDetails')">&times;</button>
+                        </span>
+                    </div>
+
+                    <div class="input-group-append">
+                        <span class="input-group-text">
+                        Titulo:
+                        </span>
+                    </div>
+
+                    <input
+                        class="form-control py-4"
+                        type="text"
+                        name="details-title-product_`+inputs.length+`"
+                        pattern='[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\"\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,}'
+                        onchange="validateJS(event,'regex')"
+                        required>
+
+                    <div class="valid-feedback">Valid.</div>
+                    <div class="invalid-feedback">Please fill out this field.</div>
+
+                </div>
+
+                <div class="col-12 col-lg-6 input-group">
+
+                    <div class="input-group-append">
+                        <span class="input-group-text">
+                        Valor:
+                        </span>
+                    </div>
+
+                    <input
+                        class="form-control py-4"
+                        type="text"
+                        name="details-value-product_`+inputs.length+`"
+                        pattern='[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\"\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,}'
+                        onchange="validateJS(event,'regex')"
+                        required>
+
+                        <div class="valid-feedback">Valid.</div>
+                        <div class="invalid-feedback">Please fill out this field.</div>
+
+                </div>
+
+            </div>
+
+            `)
+
+        }
+
+        if(type == "inputSpecifications"){
+
+            $(elem).before(`
+
+            <div class="row mb-3 inputSpecifications">
+
+                <div class="col-12 col-lg-6 input-group">
+
+                    <div class="input-group-append">
+                        <span class="input-group-text">
+                        <button type="button" class="btn btn-danger btn-sm border-0" onclick="removeInput(`+inputs.length+`,'inputSpecifications')">&times;</button>
+                        </span>
+                    </div>
+
+                    <div class="input-group-append">
+                        <span class="input-group-text">
+                        Tipo:
+                        </span>
+                    </div>
+
+                    <input
+                    class="form-control py-4"
+                    type="text"
+                    name="spec-type-product_`+inputs.length+`"
+                    pattern='[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\"\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,}'
+                    onchange="validateJS(event,'regex')"
+                    >
+
+                    <div class="valid-feedback">Valid.</div>
+                    <div class="invalid-feedback">Please fill out this field.</div>
+
+                </div>
+
+                <div class="col-12 col-lg-6 input-group">
+
+                    <input
+                    class="form-control py-4 tags-input"
+                    type="text"
+                    name="spec-value-product_`+inputs.length+`"
+                    pattern='[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\"\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,}'
+                    onchange="validateJS(event,'regex')"
+                    >
+
+                    <div class="valid-feedback">Valid.</div>
+                    <div class="invalid-feedback">Please fill out this field.</div>
+
+                </div>
+
+            </div>
+
+            `)
+
+            fncTagInput();
+
+        }
+
+        $('[name="'+type+'"]').val(inputs.length+1);
+
+    }else{
+
+        fncNotie(3,"Máximo 5 entradas permitidas");
+        return;
+
+    }
+
+}
+
+/*================================================================
+    TODO: Remover entradas al formulario de Productos
+================================================================*/
+
+function removeInput(index, type){
+
+    var inputs = $("."+type);
+
+    if(inputs.length > 1){
+
+        inputs.each(i=>{
+
+            if(i == index){
+
+                $(inputs[i]).remove();
+
+            }
+
+        })
+
+        $('[name="'+type+'"]').val(inputs.length-1);
+
+    }else{
+
+        fncNotie(3,"Debe existir al menos una entrada.");
+        return;
+
+    }
+
+}
+
+/*================================================================
+    TODO: DropZone
+================================================================*/
+
+Dropzone.autoDiscover = false;
+var arrayFiles = [];
+var countArrayFiles = 0;
+
+$(".dropzone").dropzone({
+
+    url: "/",
+    addRemoveLinks: true,
+    acceptedFiles: "image/jpeg, image/png",
+    maxFilesize: 2,
+    maxFiles: 10,
+    init: function(){
+
+    /*=================================================
+    TODO: Cuando adicionamos archivos
+    =================================================*/
+
+    this.on("addedfile", function(file){
+
+        countArrayFiles++;
+
+        setTimeout(function(){
+
+            arrayFiles.push({
+
+                "file":file.dataURL,
+                "type":file.type,
+                "width":file.width,
+                "height":file.height
+
+            })
+
+            $('[name="galeria-producto"]').val(JSON.stringify(arrayFiles));
+
+        },100*countArrayFiles)
+
+    })
+
+    /*=================================================
+    TODO: Cuando eliminamos archivos
+    =================================================*/
+
+    this.on("removedfile", function(file){
+
+        countArrayFiles++;
+
+        setTimeout(function(){
+
+        var index = arrayFiles.indexOf({
+
+            "file":file.dataURL,
+            "type":file.type,
+            "width":file.width,
+            "height":file.height
+
+        })
+
+        arrayFiles.splice(index, 1);
+
+        $('[name="galeria-producto"]').val(JSON.stringify(arrayFiles));
+
+        },100*countArrayFiles)
+
+    })
+
+    /*=================================================
+    TODO:  Obligatorio enviar archivos
+    =================================================*/
+
+    myDropzone = this;
+
+    $(".saveBtn").click(function(){
+
+        if (arrayFiles.length >= 1) {
+
+            $(this).attr("type","submit");
+            myDropzone.processQueue();
+
+        }else{
+
+            if($("[name='galeria-producto-old']").length > 0 && $("[name='galeria-producto-old']").val() != ""){
+
+                $(this).attr("type","submit");
+                myDropzone.processQueue();
+
+            }else{
+
+                $(this).attr("type","button");
+                fncSweetAlert("error", "La galería no puede estar vacía.", null)
+
+            }
+
+        }
+
+    })
+
+    }
+
+});
+
+/*================================================================
+    TODO: Elegir tipo de oferta
+================================================================*/
+
+function changeOffer(type){
+
+    if(type.target.value == "Discount"){
+
+        $(".typeOffer").html("Porcentaje %:");
+
+    }
+
+    if(type.target.value == "Fixed"){
+
+        $(".typeOffer").html("Precio $:");
+
+    }
+
+}

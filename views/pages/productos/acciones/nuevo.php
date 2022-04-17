@@ -318,10 +318,885 @@
 
                     </div>
 
+                    <!--==================================================
+                        TODO: Palabras Claves
+                    ==================================================-->
+
+                    <div class="form-group mt-2">
+                        <label>Tags Producto</label>
+                        <input
+                            type="text"
+                            class="form-control tags-input"
+                            pattern='[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\"\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,}'
+                            onchange="validateJS(event,'regex')"
+                            name="tags-producto"
+                            required>
+
+                            <div class="valid-feedback">Campo Valido.</div>
+                            <div class="invalid-feedback">Por favor rellene este campo.</div>
+
+                    </div>
+
+                    <!--==================================================
+                        TODO: Resumen del Producto
+                    ==================================================-->
+
+                    <div class="form-group mt-2">
+
+						<label>Resumen del Producto<sup class="text-danger">*</sup> Ex: 20 hours of portable capabilities</label>
+
+						<input type="hidden" name="inputSummary" value="1">
+
+						<div class="input-group mb-3 inputSummary">
+
+							<div class="input-group-append">
+								<span class="input-group-text">
+									<button type="button" class="btn btn-danger btn-sm border-0" onclick="removeInput(0,'inputSummary')">&times;</button>
+								</span>
+							</div>
+
+							<input
+							class="form-control py-4"
+							type="text"
+							name="summary-product_0"
+							pattern='[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\"\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,}'
+							onchange="validateJS(event,'regex')"
+							required>
+
+							<div class="valid-feedback">Campo Valido.</div>
+                            <div class="invalid-feedback">Por favor rellene este campo.</div>
+
+						</div>
+
+						<button type="button" class="btn btn-primary mb-2" onclick="addInput(this, 'inputSummary')">Adicionar Resumen</button>
+
+					</div>
+
+                    <!--==================================================
+                        TODO: Detalles del Producto
+                    ==================================================-->
+
+                    <div class="form-group mt-2">
+
+						<label>Detalles del Producto<sup class="text-danger">*</sup> Ex: <strong>Title:</strong> Bluetooth, <strong>Value:</strong> Yes</label>
+
+						<input type="hidden" name="inputDetails" value="1">
+
+						<div class="input-group mb-3 inputDetails">
+
+                            <!--==================================================
+                                TODO: Entrada para el título del detalle
+                            ==================================================-->
+
+							<div class="col-12 col-lg-6 input-group">
+
+                                <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        <button type="button" class="btn btn-danger btn-sm border-0" onclick="removeInput(0,'inputDetails')">&times;</button>
+                                    </span>
+                                </div>
+
+                                <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        Titulo:
+                                    </span>
+                                </div>
+
+                                <input
+                                class="form-control py-4"
+                                type="text"
+                                name="details-title-product_0"
+                                pattern='[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\"\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,}'
+                                onchange="validateJS(event,'regex')"
+                                required>
+
+                                <div class="valid-feedback">Campo Valido.</div>
+                                <div class="invalid-feedback">Por favor rellene este campo.</div>
+
+                            </div>
+
+                            <!--==================================================
+                                TODO: Entrada para valores del detalle
+                            ==================================================-->
+
+							<div class="col-12 col-lg-6 input-group">
+
+                                <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        Valor:
+                                    </span>
+                                </div>
+
+                                <input
+                                class="form-control py-4"
+                                type="text"
+                                name="details-value-product_0"
+                                pattern='[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\"\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,}'
+                                onchange="validateJS(event,'regex')"
+                                required>
+
+                                <div class="valid-feedback">Campo Valido.</div>
+                                <div class="invalid-feedback">Por favor rellene este campo.</div>
+
+                            </div>
+
+                        </div>
+
+						<button type="button" class="btn btn-primary mb-2" onclick="addInput(this, 'inputDetails')">Adicionar Detalle</button>
+
+					</div>
+
+                    <!--==================================================
+                        TODO: Especificaciones técnicas del Producto
+                    ==================================================-->
+
+                    <div class="form-group mt-2">
+
+						<label>Especificaciones del Producto<strong>Type:</strong> Color, <strong>Values:</strong> Black, Red, White</label>
+
+						<input type="hidden" name="inputSpecifications" value="1">
+
+						<div class="input-group mb-3 inputSpecifications">
+
+                            <!--==================================================
+                                TODO: Entrada para el tipo de especificación
+                            ==================================================-->
+
+							<div class="col-12 col-lg-6 input-group">
+
+                                <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        <button type="button" class="btn btn-danger btn-sm border-0" onclick="removeInput(0,'inputSpecifications')">&times;</button>
+                                    </span>
+                                </div>
+
+                                <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        Tipo:
+                                    </span>
+                                </div>
+
+                                <input
+                                class="form-control py-4"
+                                type="text"
+                                name="spec-type-product_0"
+                                pattern='[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\"\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,}'
+                                onchange="validateJS(event,'regex')"
+                                required>
+
+                                <div class="valid-feedback">Campo Valido.</div>
+                                <div class="invalid-feedback">Por favor rellene este campo.</div>
+
+                            </div>
+
+                            <!--==================================================
+                                TODO: Entrada para valores de la especificación
+                            ==================================================-->
+
+							<div class="col-12 col-lg-6 input-group">
+
+                                <input
+                                class="form-control py-4 tags-input"
+                                type="text"
+                                name="spec-value-product_0"
+                                pattern='[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\"\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,}'
+                                onchange="validateJS(event,'regex')"
+                                required>
+
+                                <div class="valid-feedback">Campo Valido.</div>
+                                <div class="invalid-feedback">Por favor rellene este campo.</div>
+
+                            </div>
+
+                        </div>
+
+						<button type="button" class="btn btn-primary mb-2" onclick="addInput(this, 'inputSpecifications')">Adicionar Especificaciones</button>
+
+					</div>
+
+                    <!--==================================================
+                        TODO: Galería del Producto
+                    ==================================================-->
+
+                    <div class="form-group mt-2">
+
+                        <label>Galería del Producto: <sup class="text-danger">*</sup></label> 
+
+                        <div class="dropzone mb-3">
+
+                            <div class="dz-message">
+
+                                Suelta tus imágenes aquí, tamaño máximo 500px * 500px
+
+                            </div>
+
+                        </div>
+
+                        <input type="hidden" name="galeria-producto">
+
+                    </div>
+
+                    <!--==================================================
+                        TODO: Video del Producto
+                    ==================================================-->
+
+                    <div class="form-group mt-2">
+
+                        <label>Video del Producto | Ejem: <strong>Type:</strong> YouTube, <strong>Id:</strong> Sl5FaskVpD4</label> 
+
+                        <div class="row mb-3">
+
+                            <div class="col-12 col-lg-6 input-group mx-0 pr-0">
+
+                                <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        Type:
+                                    </span>
+                                </div>
+
+                                <select
+                                class="form-control"
+                                name="type_video"
+                                >
+                                    <option value="">Seleccionar Plataforma</option>
+                                    <option value="youtube">YouTube</option>
+                                    <option value="vimeo">Vimeo</option>
+
+                                </select>
+
+                            </div>
+
+                            <div class="col-12 col-lg-6  input-group mx-0">
+
+                                <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        Id:
+                                    </span>
+                                </div>
+
+                                <input
+                                type="text"
+                                class="form-control"
+                                name="id_video"
+                                pattern="[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\'\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,100}"
+                                maxlength="100"
+                                onchange="validateJS(event,'regex')"
+                                >
+
+                                <div class="valid-feedback">Campo Valido.</div>
+                                <div class="invalid-feedback">Por favor rellene este campo.</div>
+
+                            </div>
+
+                        </div>
 
 
+                    </div>
 
-                    
+
+                    <!--==================================================
+                        TODO: Banner Top del Producto
+                    ==================================================-->
+
+                    <div class="form-group mt-2">
+
+                        <label>Banner Top del Producto<sup class="text-danger">*</sup>, Ejem:</label>
+
+                        <figure class="pb-5">
+
+                            <img src="<?php echo TemplateController::srcImg() ?>views/img/products/default/example-top-banner.png" class="img-fluid">
+
+                        </figure>
+
+                        <div class="row mb-5">
+
+                            <!--==================================================
+                                TODO: H3 Tag
+                            ==================================================-->
+
+                            <div class="col-12 col-lg-6 input-group mx-0 pr-0 mb-3">
+
+                                <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        H3 Tag:
+                                    </span>
+                                </div>
+
+                                <input
+                                type="text"
+                                class="form-control"
+                                placeholder="Ex: 20%"
+                                name="topBannerH3Tag"
+                                pattern="[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\'\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,50}"
+                                maxlength="50"
+                                onchange="validateJS(event,'regex')"
+                                required
+                                >
+
+                                <div class="valid-feedback">Campo Valido.</div>
+                                <div class="invalid-feedback">Por favor rellene este campo.</div>
+
+                            </div>
+
+                            <!--==================================================
+                                TODO: P1 Tag
+                            ==================================================-->
+
+                            <div class="col-12 col-lg-6 input-group mx-0 mb-3">
+
+                                <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        P1 Tag:
+                                    </span>
+                                </div>
+
+                                <input type="text"
+                                class="form-control"
+                                placeholder="Ex: Disccount"
+                                name="topBannerP1Tag"
+                                pattern="[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\'\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,50}"
+                                maxlength="50"
+                                onchange="validateJS(event,'regex')"
+                                required
+                                >
+
+                                <div class="valid-feedback">Campo Valido.</div>
+                                <div class="invalid-feedback">Por favor rellene este campo.</div>
+
+                            </div>
+
+                            <!--==================================================
+                                TODO: H4 Tag
+                            ==================================================-->
+
+                            <div class="col-12 col-lg-6 input-group mx-0 pr-0 mb-3">
+
+                                <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        H4 Tag:
+                                    </span>
+                                </div>
+
+                                <input type="text"
+                                class="form-control"
+                                placeholder="Ex: For Books Of March"
+                                name="topBannerH4Tag"
+                                pattern="[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\'\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,50}"
+                                maxlength="50"
+                                onchange="validateJS(event,'regex')"
+                                required
+                                >
+
+                                <div class="valid-feedback">Campo Valido.</div>
+                                <div class="invalid-feedback">Por favor rellene este campo.</div>
+
+                            </div>
+
+                            <!--==================================================
+                                TODO: P2 Tag
+                            ==================================================-->
+
+                            <div class="col-12 col-lg-6 input-group mx-0 mb-3">
+
+                                <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        P2 Tag:
+                                    </span>
+                                </div>
+
+                                <input type="text"
+                                class="form-control"
+                                placeholder="Ex: Enter Promotion"
+                                name="topBannerP2Tag"
+                                pattern="[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\'\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,50}"
+                                maxlength="50"
+                                onchange="validateJS(event,'regex')"
+                                required
+                                >
+
+                                <div class="valid-feedback">Campo Valido.</div>
+                                <div class="invalid-feedback">Por favor rellene este campo.</div>
+
+                            </div>
+
+                            <!--==================================================
+                                TODO: Span Tag
+                            ==================================================-->
+
+                            <div class="col-12 col-lg-6 input-group mx-0 pr-0 mb-3">
+
+                                <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        Span Tag:
+                                    </span>
+                                </div>
+
+                                <input
+                                type="text"
+                                class="form-control"
+                                placeholder="Ex: Sale2019"
+                                name="topBannerSpanTag"
+                                pattern="[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\'\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,50}"
+                                maxlength="50"
+                                onchange="validateJS(event,'regex')"
+                                required
+                                >
+
+                                <div class="valid-feedback">Campo Valido.</div>
+                                <div class="invalid-feedback">Por favor rellene este campo.</div>
+
+                            </div>
+
+                            <!--==================================================
+                                TODO: Button Tag
+                            ==================================================-->
+
+                            <div class="col-12 col-lg-6 input-group mx-0 mb-3">
+
+                                <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        Button Tag:
+                                    </span>
+                                </div>
+
+                                <input
+                                type="text"
+                                class="form-control"
+                                placeholder="Ex: Shop now"
+                                name="topBannerButtonTag"
+                                pattern="[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\'\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,50}"
+                                maxlength="50"
+                                onchange="validateJS(event,'regex')"
+                                required
+                                >
+
+                                <div class="valid-feedback">Campo Valido.</div>
+                                <div class="invalid-feedback">Por favor rellene este campo.</div>
+
+                            </div>
+
+                            <!--==================================================
+                                TODO: IMG Tag
+                            ==================================================-->
+
+                            <div class="col-12">
+
+                                <label>IMG Tag:</label>
+
+                                <div class="form-group__content">
+
+                                    <label class="pb-5" for="topBanner">
+                                    <img src="<?php echo TemplateController::srcImg() ?>views/img/products/default/default-top-banner.jpg" class="img-fluid changeTopBanner">
+                                    </label>
+
+                                    <div class="custom-file">
+
+                                        <input type="file"
+                                        class="custom-file-input"
+                                        id="topBanner"
+                                        name="topBanner"
+                                        accept="image/*"
+                                        maxSize="2000000"
+                                        onchange="validateImageJS(event, 'changeTopBanner')"
+                                        required>
+
+                                        <div class="valid-feedback">Campo Valido.</div>
+                                        <div class="invalid-feedback">Por favor rellene este campo.</div>
+
+                                        <label class="custom-file-label" for="topBanner">Choose file</label>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+                    <!--==================================================
+                        TODO: Banner por defecto del Producto
+                    ==================================================-->
+
+                    <div class="form-group mt-2">
+
+                        <label>Banner por defecto del Producto<sup class="text-danger">*</sup></label>
+
+                        <div class="form-group__content">
+
+                            <label class="pb-5" for="defaultBanner">
+                            <img src="<?php echo TemplateController::srcImg() ?>views/img/products/default/default-banner.jpg" class="img-fluid changeDefaultBanner" style="width:500px">
+                            </label>
+
+                            <div class="custom-file">
+
+                                <input type="file"
+                                class="custom-file-input"
+                                id="defaultBanner"
+                                name="defaultBanner"
+                                accept="image/*"
+                                maxSize="2000000"
+                                onchange="validateImageJS(event, 'changeDefaultBanner')"
+                                required>
+
+                                <div class="valid-feedback">Campo Valido.</div>
+                                <div class="invalid-feedback">Por favor rellene este campo.</div>
+
+                                <label class="custom-file-label" for="defaultBanner">Choose file</label>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!--==================================================
+                        TODO: Slider Horizontal del Producto
+                    ==================================================-->
+
+                    <div class="form-group mt-2">
+
+                        <label>Slider Horizontal del Producto<sup class="text-danger">*</sup>, Ex:</label>
+
+                        <figure class="pb-5">
+
+                            <img src="<?php echo TemplateController::srcImg() ?>views/img/products/default/example-horizontal-slider.png" class="img-fluid">
+
+                        </figure>
+
+                        <div class="row mb-3">
+
+                            <!--==================================================
+                                TODO: H4 Tag
+                            ==================================================-->
+
+                            <div class="col-12 col-lg-6 input-group mx-0 pr-0 mb-3">
+
+                                <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        H4 Tag:
+                                    </span>
+                                </div>
+
+                                <input type="text"
+                                class="form-control"
+                                placeholder="Ex: Limit Edition"
+                                name="hSliderH4Tag"
+                                pattern="[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\'\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,50}"
+                                maxlength="50"
+                                onchange="validateJS(event,'regex')"
+                                required
+                                >
+
+                                <div class="valid-feedback">Campo Valido.</div>
+                                <div class="invalid-feedback">Por favor rellene este campo.</div>
+
+                            </div>
+
+                            <!--==================================================
+                                TODO: H3-1 Tag
+                            ==================================================-->
+
+                            <div class="col-12 col-lg-6 input-group mx-0 mb-3">
+
+                                <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        H3-1 Tag:
+                                    </span>
+                                </div>
+
+                                <input type="text"
+                                class="form-control"
+                                placeholder="Ex: Happy Summer"
+                                name="hSliderH3_1Tag"
+                                pattern="[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\'\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,50}"
+                                maxlength="50"
+                                onchange="validateJS(event,'regex')"
+                                required
+                                >
+
+                                <div class="valid-feedback">Campo Valido.</div>
+                                <div class="invalid-feedback">Por favor rellene este campo.</div>
+
+                            </div>
+
+                            <!--==================================================
+                                TODO: H3-2 Tag
+                            ==================================================-->
+
+                            <div class="col-12 col-lg-6 input-group mx-0 pr-0 mb-3">
+
+                                <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        H3-2 Tag:
+                                    </span>
+                                </div>
+
+                                <input type="text"
+                                class="form-control"
+                                placeholder="Ex: Combo Super Cool"
+                                name="hSliderH3_2Tag"
+                                pattern="[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\'\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,50}"
+                                maxlength="50"
+                                onchange="validateJS(event,'regex')"
+                                required
+                                >
+
+                                <div class="valid-feedback">Campo Valido.</div>
+                                <div class="invalid-feedback">Por favor rellene este campo.</div>
+
+                            </div>
+
+                            <!--==================================================
+                                TODO: H3-3 Tag
+                            ==================================================-->
+
+                            <div class="col-12 col-lg-6 input-group mx-0 mb-3">
+
+                                <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        H3-3 Tag:
+                                    </span>
+                                </div>
+
+                                <input type="text"
+                                class="form-control"
+                                placeholder="Ex: Up to"
+                                name="hSliderH3_3Tag"
+                                pattern="[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\'\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,50}"
+                                maxlength="50"
+                                onchange="validateJS(event,'regex')"
+                                required
+                                >
+
+                                <div class="valid-feedback">Campo Valido.</div>
+                                <div class="invalid-feedback">Por favor rellene este campo.</div>
+
+                            </div>
+
+                            <!--==================================================
+                                TODO: H3-4s Tag
+                            ==================================================-->
+
+                            <div class="col-12 col-lg-6 input-group mx-0 pr-0 mb-3">
+
+                                <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        H3-4s Tag:
+                                    </span>
+                                </div>
+
+                                <input type="text"
+                                class="form-control"
+                                placeholder="Ex: 40%"
+                                name="hSliderH3_4sTag"
+                                pattern="[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\'\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,50}"
+                                maxlength="50"
+                                onchange="validateJS(event,'regex')"
+                                required
+                                >
+
+                                <div class="valid-feedback">Campo Valido.</div>
+                                <div class="invalid-feedback">Por favor rellene este campo.</div>
+
+                            </div>
+
+                            <!--==================================================
+                                TODO: Button Tag
+                            ==================================================-->
+
+                            <div class="col-12 col-lg-6 input-group mx-0 mb-3">
+
+                                <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        Button Tag:
+                                    </span>
+                                </div>
+
+                                <input type="text"
+                                class="form-control"
+                                placeholder="Ex: Shop now"
+                                name="hSliderButtonTag"
+                                pattern="[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\'\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,50}"
+                                maxlength="50"
+                                onchange="validateJS(event,'regex')"
+                                required
+                                >
+
+                                <div class="valid-feedback">Campo Valido.</div>
+                                <div class="invalid-feedback">Por favor rellene este campo.</div>
+
+                            </div>
+
+                            <!--==================================================
+                                TODO: IMG Tag
+                            ==================================================-->
+
+                            <div class="col-12">
+
+                                <label>IMG Tag:</label>
+
+                                <div class="form-group__content">
+
+                                    <label class="pb-5" for="hSlider">
+                                    <img src="<?php echo TemplateController::srcImg() ?>views/img/products/default/default-horizontal-slider.jpg" class="img-fluid changeHSlider">
+                                    </label>
+
+                                    <div class="custom-file">
+
+                                        <input type="file"
+                                        class="custom-file-input"
+                                        id="hSlider"
+                                        name="hSlider"
+                                        accept="image/*"
+                                        maxSize="2000000"
+                                        onchange="validateImageJS(event, 'changeHSlider')"
+                                        required>
+
+                                        <div class="valid-feedback">Campo Valido.</div>
+                                        <div class="invalid-feedback">Por favor rellene este campo.</div>
+
+                                        <label class="custom-file-label" for="hSlider">Choose file</label>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!--==================================================
+                        TODO: Slider Vertical del Producto
+                    ==================================================-->
+
+                    <div class="form-group mt-2">
+
+                        <label>Slider Vertical del Producto<sup class="text-danger">*</sup></label>
+
+                        <div class="form-group__content">
+
+                            <label class="pb-5" for="vSlider">
+
+                                <img src="<?php echo TemplateController::srcImg() ?>views/img/products/default/default-vertical-slider.jpg" class="img-fluid changeVSlider" style="width:260px">
+
+                            </label>
+
+                            <div class="custom-file">
+
+                                <input type="file" 
+                                class="custom-file-input" 
+                                id="vSlider"
+                                name="vSlider"
+                                accept="image/*"
+                                maxSize="2000000"
+                                onchange="validateImageJS(event, 'changeVSlider')"
+                                required>
+
+                                <div class="valid-feedback">Campo Valido.</div>
+                                <div class="invalid-feedback">Por favor rellene este campo.</div>
+
+                                <label class="custom-file-label" for="vSlider">Choose file</label>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!--==================================================
+                        TODO: Oferta del Producto
+                    ==================================================-->
+
+                    <div class="form-group mt-2">
+
+                        <label>Oferta del Producto Ej: <strong>Tipo:</strong> Descuento, <strong>Porcentaje %:</strong> 25, <strong>End offer:</strong> 30/06/2020</label>
+
+                        <div class="row mb-3">
+
+                            <!--==================================================
+                                TODO: Tipo de Oferta
+                            ===================================================-->
+
+                            <div class="col-12 col-lg-4 form-group__content input-group mx-0 pr-0">
+
+                                <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        Tipo:
+                                    </span>
+                                </div>
+
+                                <select
+                                class="form-control"
+                                name="type_offer"
+                                onchange="changeOffer(event)">
+
+                                    <option value="Discount">Descuento</option>
+                                    <option value="Fixed">Precio</option>
+
+                                </select>
+
+                                <div class="valid-feedback">Campo Valido.</div>
+                                <div class="invalid-feedback">Por favor rellene este campo.</div>
+
+                            </div>
+
+                            <!--==================================================
+                                TODO: El valor de la oferta
+                            ===================================================-->
+
+                            <div class="col-12 col-lg-4 form-group__content input-group mx-0 pr-0">
+
+                                <div class="input-group-append">
+
+                                    <span
+                                    class="input-group-text typeOffer">
+                                        Porcentaje %:
+                                    </span>
+
+                                </div>
+
+                                <input type="number"
+                                class="form-control"
+                                name="value_offer"
+                                min="0"
+                                step="any"
+                                pattern="[.\\,\\0-9]{1,}"
+                                onchange="validateJS(event, 'numbers')">
+
+                                <div class="valid-feedback">Campo Valido.</div>
+                                <div class="invalid-feedback">Por favor rellene este campo.</div>
+
+                            </div>
+
+                            <!--==================================================
+                                TODO: Fecha de vencimiento de la oferta
+                            ===================================================-->
+
+                            <div class="col-12 col-lg-4 form-group__content input-group mx-0 pr-0">
+
+                                <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        End Offer:
+                                    </span>
+                                </div>
+
+                                <input type="date"
+                                class="form-control"
+                                name="date_offer">
+
+                                <div class="valid-feedback">Campo Valido.</div>
+                                <div class="invalid-feedback">Por favor rellene este campo.</div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
 
             </div>
 
@@ -333,9 +1208,9 @@
 
                 <div class="form-group mt-3">
 
-                    <a href="/tiendas" class="btn btn-light border text-left">Volver</a>
+                    <a href="/productos" class="btn btn-light border text-left">Volver</a>
 
-                    <button type="submit" class="btn bg-dark float-right">Guardar</button>
+                    <button type="submit" class="btn bg-dark float-right saveBtn">Guardar</button>
 
                 </div>
 

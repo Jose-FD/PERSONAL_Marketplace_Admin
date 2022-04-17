@@ -53,6 +53,8 @@
     <link rel="stylesheet" href="views/assets/plugins/tags-input/tags-input.css">
     <!-- summernote -->
     <link rel="stylesheet" href="views/assets/plugins/summernote/summernote-bs4.min.css">
+    <!-- dropzone-->
+    <link rel="stylesheet" href="views/assets/plugins/dropzone/dropzone.css">
 
     <!-- Theme style -->
     <link rel="stylesheet" href="views/assets/plugins/adminlte/css/adminlte.min.css">
@@ -85,9 +87,14 @@
     <!-- Tags Input -->
     <!-- https://bootstrap-tagsinput.github.io/bootstrap-tagsinput/examples/ -->
     <script src="views/assets/plugins/tags-input/tags-input.js"></script>
+
     <!-- Summernote
     https://github.com/summernote/summernote/-->
     <script src="views/assets/plugins/summernote/summernote-bs4.min.js"></script>
+
+    <!-- Dropzone
+    https://docs.dropzone.dev/-->
+    <script src="views/assets/plugins/dropzone/dropzone.js"></script>
 
     <?php if(!empty($routesArray[1]) && !isset($routesArray[2])): ?>
 

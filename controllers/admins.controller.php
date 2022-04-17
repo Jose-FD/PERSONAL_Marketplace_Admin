@@ -273,8 +273,8 @@
                     $fields = array();
 
                     $response = CurlController::request($url, $method, $fields);
-			
-				    if($response->status == 200){
+
+                    if($response->status == 200){
 
                         /*================================================================
                             TODO: Validación de lado del servidor

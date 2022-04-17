@@ -192,7 +192,7 @@
                                         </a>
 
 
-                                        <a href='/products/edit/".base64_encode($value->id_product."~".$_GET["token"])."' class='btn btn-warning btn-sm rounded-circle mr-2'>
+                                        <a href='/productos/editar/".base64_encode($value->id_product."~".$_GET["token"])."' class='btn btn-warning btn-sm rounded-circle mr-2'>
 
                                             <i class='fas fa-pencil-alt'></i>
 
