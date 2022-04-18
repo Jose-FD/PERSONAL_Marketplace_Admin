@@ -1,5 +1,8 @@
 <?php
 
+    use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\Exception;
+
     class TemplateController{
 
         /*================================================================
@@ -105,6 +108,60 @@
             }else{
 
                 return 0;
+
+            }
+
+        }
+
+        /*================================================================
+            TODO: Función para enviar correos electrónicos
+        ================================================================*/
+
+        static public function sendEmail($name, $subject, $email, $message, $url){
+
+            date_default_timezone_set("America/Lima");
+
+            $mail = new PHPMailer;
+
+            $mail->Charset = "UTF-8";
+
+            $mail->isMail();
+
+            $mail->setFrom("support@marketplace.com", "Marketplace Support");
+
+            $mail->Subject = "Hola ".$name." - ".$subject;
+
+            $mail->addAddress($email);
+
+            $mail->msgHTML('
+
+                <div>
+
+                    Hi, '.$name.':
+
+                    <p>'.$message.'</p>
+
+                    <a href="'.$url.'">Haga clic en este enlace para más información.</a>
+
+                    Si no solicitó verificar esta dirección, puede ignorar este correo electrónico.
+
+                    Gracias,
+
+                    Tu Marketplace Team
+
+                </div>
+
+            ');
+
+            $send = $mail->Send();
+
+            if(!$send){
+
+                return $mail->ErrorInfo;
+
+            }else{
+
+                return "ok";
 
             }
 

@@ -44,14 +44,41 @@
 
                 if($this->deleteFile != "no"){
 
-                    $fields = array(
+                    if($this->table == "products"){
 
-                    "deleteFile"=>$this->deleteFile,
-                    "deleteDir"=>$this->suffix
+                        $count = 0;
 
-                    );
+                        foreach (json_decode(base64_decode($this->deleteFile),true) as $key => $value) {
 
-                    $picture = CurlController::requestFile($fields);
+                            $count++;
+
+                            $fields = array(
+
+                                "deleteFile"=>$value
+
+                            );
+
+                            CurlController::requestFile($fields);
+
+                            if($count == count(json_decode(base64_decode($this->deleteFile),true))){
+
+                                $picture = "ok";
+                            }
+                        }
+
+                    }else{
+
+                        $fields = array(
+
+                            "deleteFile"=>$this->deleteFile,
+                            "deleteDir"=>$this->suffix
+
+                        );
+
+                        $picture = CurlController::requestFile($fields);
+
+                    }
+
                 }else{
 
                     $picture = "ok";

@@ -420,3 +420,75 @@ $(document).on("click",".removeItem",function(){
     })
 })
 
+
+/*================================================================
+    TODO: Cambiar estado del producto
+================================================================*/
+
+function changeState(event, idProduct){
+
+    if(event.target.checked){
+
+        var state = "show";
+
+    }else{
+
+        var state = "hidden";
+
+    }
+
+
+    var data = new FormData();
+    data.append("state", state);
+    data.append("idProduct", idProduct);
+    data.append("token", localStorage.getItem("token_user"));
+
+
+    $.ajax({
+        url: "ajax/ajax-state.php",
+        method: "POST",
+        data: data,
+        contentType: false,
+        cache: false,
+        processData: false,
+        success: function(response){
+
+            if(response == 200){
+
+                fncNotie(1, "El registro a sido actualizado");
+
+            }else{
+
+                fncNotie(3, "Error al actualizar el registro");
+            }
+
+        }
+
+    })
+
+}
+
+
+/*================================================================
+    TODO: Feedback
+================================================================*/
+
+$(document).on("click",".feedback", function(){
+
+    var  idProduct = $(this).attr("idProduct");
+    var  approval = $(this).attr("approval");
+
+    $("[name='idProduct']").val(idProduct);
+
+    if(approval == "approved"){
+
+        $("#approval_product").prop("checked",true);
+
+    }else{
+
+        $("#approval_product").prop("checked",false);
+    }
+
+    $("#myFeedback").modal();
+
+    })

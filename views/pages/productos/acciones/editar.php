@@ -153,7 +153,7 @@
                         TODO: Categoria del Producto
                     ===================================================-->
 
-                    <div class="form-group mt-2">
+                    <!-- <div class="form-group mt-2">
 
                         <label>Categoria<sup class="text-danger">*</sup></label>
 
@@ -191,13 +191,28 @@
 
                         </div>
 
+                    </div> -->
+
+
+                    <div class="form-group mt-2">
+
+                        <label>Categoria<sup class="text-danger">*</sup></label>
+
+                        <input
+                        type="text"
+                        class="form-control"
+                        value="<?php echo $product->name_category ?>"
+                        readonly>
+
+                        <input type="hidden"  name="name-category" value="<?php echo $product->id_category ?>_<?php echo $product->url_category ?>"  >
+
                     </div>
 
                     <!--==================================================
                         TODO: Subcategoría del Producto
                     ===================================================-->
 
-                    <div class="form-group selectSubcategory">
+                    <!-- <div class="form-group selectSubcategory">
 
                         <label>Subcategoría<sup class="text-danger">*</sup></label>
 
@@ -211,6 +226,51 @@
 
                             <div class="valid-feedback">Valid.</div>
                             <div class="invalid-feedback">Please fill out this field.</div>
+
+                        </div>
+
+                    </div> -->
+
+                    <div class="form-group mt-2">
+
+                        <label>Subcategoría<sup class="text-danger">*</sup></label>
+
+
+                        <?php
+
+                            $url = "subcategories?select=id_subcategory,name_subcategory,title_list_subcategory&linkTo=id_category_subcategory&equalTo=".$product->id_category;
+                            $method = "GET";
+                            $fields = array();
+
+                            $subcategories = CurlController::request($url, $method, $fields)->results;
+
+                        ?>
+
+                        <div class="form-group__content">
+
+                            <select
+                            class="form-control"
+                            name="name-subcategory"
+                            required>
+
+                                <?php foreach ($subcategories as $key => $value): ?>
+
+                                    <?php if ($value->id_subcategory == $product->id_subcategory_product): ?>
+
+                                        <option value="<?php echo $product->id_subcategory_product ?>_<?php echo $product->title_list_product ?>" selected><?php echo $product->name_subcategory ?></option>
+
+                                    <?php else: ?>
+
+                                        <option value="<?php echo $value->id_subcategory ?>_<?php echo $value->title_list_subcategory ?>" selected><?php echo $value->name_subcategory ?></option>
+
+                                    <?php endif ?>
+
+                                <?php endforeach ?>
+
+                            </select>
+
+                            <div class="valid-feedback">Campo Valido.</div>
+                            <div class="invalid-feedback">Por favor rellene este campo.</div>
 
                         </div>
 
@@ -238,6 +298,7 @@
                                 step="any"
                                 pattern="[.\\,\\0-9]{1,}"
                                 onchange="validateJS(event, 'numbers')"
+                                value="<?php echo $product->price_product ?>"
                                 required>
 
                                 <div class="valid-feedback">Campo Valido.</div>
@@ -260,6 +321,7 @@
                                 step="any"
                                 pattern="[.\\,\\0-9]{1,}"
                                 onchange="validateJS(event, 'numbers')"
+                                value="<?php echo $product->shipping_product ?>"
                                 required>
 
                                 <div class="valid-feedback">Campo Valido.</div>
@@ -282,6 +344,7 @@
                                 step="any"
                                 pattern="[.\\,\\0-9]{1,}"
                                 onchange="validateJS(event, 'numbers')"
+                                value="<?php echo $product->delivery_time_product ?>"
                                 required>
 
                                 <div class="valid-feedback">Campo Valido.</div>
@@ -304,6 +367,7 @@
                                 step="any"
                                 pattern="[.\\,\\0-9]{1,}"
                                 onchange="validateJS(event, 'numbers')"
+                                value="<?php echo $product->stock_product ?>"
                                 required>
 
                                 <div class="valid-feedback">Campo Valido.</div>
@@ -324,7 +388,7 @@
 
                         <label for="customFile" class="d-flex justify-content-center">
                             <figure class="text-center py-3">
-                                <img src="<?php echo TemplateController::srcImg() ?>views/img/products/default/default-image.jpg" class="img-fluid changeImagen" style="width:150px">
+                                <img src="<?php echo TemplateController::srcImg() ?>views/img/products/<?php echo $product->url_category ?>/<?php echo $product->image_product ?>" class="img-fluid changeImagen" style="width:150px">
                             </figure>
                         </label>
 
@@ -336,7 +400,7 @@
                                 accept="image/*"
                                 onchange="validateImageJS(event,'changeImagen')"
                                 name="imagen-producto"
-                                required>
+                                >
 
                                 <div class="valid-feedback">Campo Valido.</div>
                                 <div class="invalid-feedback">Por favor rellene este campo.</div>
@@ -357,7 +421,7 @@
                         class="summernote"
                         name="descripcion-producto"
                         required
-                        ></textarea>
+                        ><?php echo $product->description_product ?></textarea>
 
                             <div class="valid-feedback">Campo Valido.</div>
                             <div class="invalid-feedback">Por favor rellene este campo.</div>
@@ -376,6 +440,7 @@
                             pattern='[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\"\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,}'
                             onchange="validateJS(event,'regex')"
                             name="tags-producto"
+                            value="<?php echo implode(",",json_decode($product->tags_product,true)) ?>"
                             required>
 
                             <div class="valid-feedback">Campo Valido.</div>
@@ -391,28 +456,33 @@
 
 						<label>Resumen del Producto<sup class="text-danger">*</sup> Ex: 20 hours of portable capabilities</label>
 
-						<input type="hidden" name="inputSummary" value="1">
+                        <?php foreach (json_decode($product->summary_product, true) as $key => $value): ?>
 
-						<div class="input-group mb-3 inputSummary">
+                            <input type="hidden" name="inputSummary" value="<?php echo $key+1 ?>">
 
-							<div class="input-group-append">
-								<span class="input-group-text">
-									<button type="button" class="btn btn-danger btn-sm border-0" onclick="removeInput(0,'inputSummary')">&times;</button>
-								</span>
-							</div>
+                            <div class="input-group mb-3 inputSummary">
 
-							<input
-							class="form-control py-4"
-							type="text"
-							name="summary-product_0"
-							pattern='[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\"\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,}'
-							onchange="validateJS(event,'regex')"
-							required>
+                                <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        <button type="button" class="btn btn-danger btn-sm border-0" onclick="removeInput(<?php echo $key ?>,'inputSummary')">&times;</button>
+                                    </span>
+                                </div>
 
-							<div class="valid-feedback">Campo Valido.</div>
-                            <div class="invalid-feedback">Por favor rellene este campo.</div>
+                                <input
+                                class="form-control py-4"
+                                type="text"
+                                name="summary-product_<?php echo $key ?>"
+                                pattern='[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\"\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,}'
+                                onchange="validateJS(event,'regex')"
+                                value="<?php echo $value ?>"
+                                required>
 
-						</div>
+                                <div class="valid-feedback">Campo Valido.</div>
+                                <div class="invalid-feedback">Por favor rellene este campo.</div>
+
+                            </div>
+
+                        <?php endforeach ?>
 
 						<button type="button" class="btn btn-primary mb-2" onclick="addInput(this, 'inputSummary')">Adicionar Resumen</button>
 
@@ -426,67 +496,73 @@
 
 						<label>Detalles del Producto<sup class="text-danger">*</sup> Ex: <strong>Title:</strong> Bluetooth, <strong>Value:</strong> Yes</label>
 
-						<input type="hidden" name="inputDetails" value="1">
+                        <?php foreach (json_decode($product->details_product, true) as $key => $value): ?>
 
-						<div class="input-group mb-3 inputDetails">
+                            <input type="hidden" name="inputDetails" value="<?php echo $key+1 ?>">
 
-                            <!--==================================================
-                                TODO: Entrada para el título del detalle
-                            ==================================================-->
+                            <div class="input-group mb-3 inputDetails">
 
-							<div class="col-12 col-lg-6 input-group">
+                                <!--==================================================
+                                    TODO: Entrada para el título del detalle
+                                ==================================================-->
 
-                                <div class="input-group-append">
-                                    <span class="input-group-text">
-                                        <button type="button" class="btn btn-danger btn-sm border-0" onclick="removeInput(0,'inputDetails')">&times;</button>
-                                    </span>
+                                <div class="col-12 col-lg-6 input-group">
+
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">
+                                            <button type="button" class="btn btn-danger btn-sm border-0" onclick="removeInput(<?php echo $key ?>,'inputDetails')">&times;</button>
+                                        </span>
+                                    </div>
+
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">
+                                            Titulo:
+                                        </span>
+                                    </div>
+
+                                    <input
+                                    class="form-control py-4"
+                                    type="text"
+                                    name="details-title-product_<?php echo $key ?>"
+                                    pattern='[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\"\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,}'
+                                    onchange="validateJS(event,'regex')"
+                                    value="<?php echo $value["title"] ?>"
+                                    required>
+
+                                    <div class="valid-feedback">Campo Valido.</div>
+                                    <div class="invalid-feedback">Por favor rellene este campo.</div>
+
                                 </div>
 
-                                <div class="input-group-append">
-                                    <span class="input-group-text">
-                                        Titulo:
-                                    </span>
+                                <!--==================================================
+                                    TODO: Entrada para valores del detalle
+                                ==================================================-->
+
+                                <div class="col-12 col-lg-6 input-group">
+
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">
+                                            Valor:
+                                        </span>
+                                    </div>
+
+                                    <input
+                                    class="form-control py-4"
+                                    type="text"
+                                    name="details-value-product_<?php echo $key ?>"
+                                    pattern='[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\"\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,}'
+                                    onchange="validateJS(event,'regex')"
+                                    value="<?php echo $value["value"] ?>"
+                                    required>
+
+                                    <div class="valid-feedback">Campo Valido.</div>
+                                    <div class="invalid-feedback">Por favor rellene este campo.</div>
+
                                 </div>
-
-                                <input
-                                class="form-control py-4"
-                                type="text"
-                                name="details-title-product_0"
-                                pattern='[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\"\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,}'
-                                onchange="validateJS(event,'regex')"
-                                required>
-
-                                <div class="valid-feedback">Campo Valido.</div>
-                                <div class="invalid-feedback">Por favor rellene este campo.</div>
 
                             </div>
 
-                            <!--==================================================
-                                TODO: Entrada para valores del detalle
-                            ==================================================-->
-
-							<div class="col-12 col-lg-6 input-group">
-
-                                <div class="input-group-append">
-                                    <span class="input-group-text">
-                                        Valor:
-                                    </span>
-                                </div>
-
-                                <input
-                                class="form-control py-4"
-                                type="text"
-                                name="details-value-product_0"
-                                pattern='[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\"\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,}'
-                                onchange="validateJS(event,'regex')"
-                                required>
-
-                                <div class="valid-feedback">Campo Valido.</div>
-                                <div class="invalid-feedback">Por favor rellene este campo.</div>
-
-                            </div>
-
-                        </div>
+                        <?php endforeach ?>
 
 						<button type="button" class="btn btn-primary mb-2" onclick="addInput(this, 'inputDetails')">Adicionar Detalle</button>
 
@@ -500,61 +576,132 @@
 
 						<label>Especificaciones del Producto<strong>Type:</strong> Color, <strong>Values:</strong> Black, Red, White</label>
 
-						<input type="hidden" name="inputSpecifications" value="1">
+                        <?php if ($product->specifications_product != null): ?>
 
-						<div class="input-group mb-3 inputSpecifications">
+                            <?php foreach (json_decode($product->specifications_product, true) as $key => $value): ?>
 
-                            <!--==================================================
-                                TODO: Entrada para el tipo de especificación
-                            ==================================================-->
+                                <input type="hidden" name="inputSpecifications" value="<?php echo $key+1 ?>">
 
-							<div class="col-12 col-lg-6 input-group">
+                                <div class="input-group mb-3 inputSpecifications">
 
-                                <div class="input-group-append">
-                                    <span class="input-group-text">
-                                        <button type="button" class="btn btn-danger btn-sm border-0" onclick="removeInput(0,'inputSpecifications')">&times;</button>
-                                    </span>
+                                    <!--==================================================
+                                        TODO: Entrada para el tipo de especificación
+                                    ==================================================-->
+
+                                    <div class="col-12 col-lg-6 input-group">
+
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                <button type="button" class="btn btn-danger btn-sm border-0" onclick="removeInput(<?php echo $key ?>,'inputSpecifications')">&times;</button>
+                                            </span>
+                                        </div>
+
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                Tipo:
+                                            </span>
+                                        </div>
+
+                                        <input
+                                        class="form-control py-4"
+                                        type="text"
+                                        name="spec-type-product_<?php echo $key ?>"
+                                        pattern='[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\"\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,}'
+                                        onchange="validateJS(event,'regex')"
+                                        value="<?php echo array_keys($value)[0] ?>"
+                                        required>
+
+                                        <div class="valid-feedback">Campo Valido.</div>
+                                        <div class="invalid-feedback">Por favor rellene este campo.</div>
+
+                                    </div>
+
+                                    <!--==================================================
+                                        TODO: Entrada para valores de la especificación
+                                    ==================================================-->
+
+                                    <div class="col-12 col-lg-6 input-group">
+
+                                        <input
+                                        class="form-control py-4 tags-input"
+                                        type="text"
+                                        name="spec-value-product_<?php echo $key ?>"
+                                        pattern='[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\"\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,}'
+                                        onchange="validateJS(event,'regex')"
+                                        value="<?php echo implode(",", array_values($value)[0]); ?>"
+                                        required>
+
+                                        <div class="valid-feedback">Campo Valido.</div>
+                                        <div class="invalid-feedback">Por favor rellene este campo.</div>
+
+                                    </div>
+
                                 </div>
 
-                                <div class="input-group-append">
-                                    <span class="input-group-text">
-                                        Tipo:
-                                    </span>
+                            <?php endforeach ?>
+
+                        <?php else: ?>
+
+                            <input type="hidden" name="inputSpecifications" value="1">
+
+                            <div class="row mb-3 inputSpecifications">
+
+                                <!--==================================================
+                                    TODO: Entrada para el tipo de especificación
+                                ==================================================-->
+
+                                <div class="col-12 col-lg-6 input-group">
+
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">
+                                            <button type="button" class="btn btn-danger btn-sm border-0" onclick="removeInput(0,'inputSpecifications')">&times;</button>
+                                        </span>
+                                    </div>
+
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">
+                                            Tipo:
+                                        </span>
+                                    </div>
+
+                                    <input
+                                    class="form-control py-4"
+                                    type="text"
+                                    name="spec-type-product_0"
+                                    pattern='[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\"\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,}'
+                                    onchange="validateJS(event,'regex')"
+                                    value="<?php echo array_keys($value)[0] ?>"
+                                    required>
+
+                                    <div class="valid-feedback">Campo Valido.</div>
+                                    <div class="invalid-feedback">Por favor rellene este campo.</div>
+
                                 </div>
 
-                                <input
-                                class="form-control py-4"
-                                type="text"
-                                name="spec-type-product_0"
-                                pattern='[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\"\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,}'
-                                onchange="validateJS(event,'regex')"
-                                required>
+                                <!--==================================================
+                                    TODO: Entrada para valores de la especificación
+                                ==================================================-->
 
-                                <div class="valid-feedback">Campo Valido.</div>
-                                <div class="invalid-feedback">Por favor rellene este campo.</div>
+                                <div class="col-12 col-lg-6 input-group">
+
+                                    <input
+                                    class="form-control py-4 tags-input"
+                                    type="text"
+                                    name="spec-value-product_0"
+                                    pattern='[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\"\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,}'
+                                    onchange="validateJS(event,'regex')"
+                                    value="<?php echo implode(",", array_values($value)[0]); ?>"
+                                    required>
+
+                                    <div class="valid-feedback">Campo Valido.</div>
+                                    <div class="invalid-feedback">Por favor rellene este campo.</div>
+
+                                </div>
+
 
                             </div>
 
-                            <!--==================================================
-                                TODO: Entrada para valores de la especificación
-                            ==================================================-->
-
-							<div class="col-12 col-lg-6 input-group">
-
-                                <input
-                                class="form-control py-4 tags-input"
-                                type="text"
-                                name="spec-value-product_0"
-                                pattern='[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\"\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,}'
-                                onchange="validateJS(event,'regex')"
-                                required>
-
-                                <div class="valid-feedback">Campo Valido.</div>
-                                <div class="invalid-feedback">Por favor rellene este campo.</div>
-
-                            </div>
-
-                        </div>
+                        <?php endif ?>
 
 						<button type="button" class="btn btn-primary mb-2" onclick="addInput(this, 'inputSpecifications')">Adicionar Especificaciones</button>
 
@@ -570,6 +717,22 @@
 
                         <div class="dropzone mb-3">
 
+                            <?php foreach (json_decode($product->gallery_product,true) as $value): ?>
+
+                                <div class="dz-preview dz-file-preview">
+
+                                    <div class="dz-image">
+
+                                        <img class="img-fluid" src="<?php echo TemplateController::srcImg() ?>views/img/products/<?php echo $product->url_category ?>/gallery/<?php echo $value ?>">
+
+                                    </div>
+
+                                    <a class="dz-remove" data-dz-remove remove="<?php echo $value?>" onclick="removeGallery(this)">Remove file</a>
+
+                                </div>
+
+                            <?php endforeach ?>
+
                             <div class="dz-message">
 
                                 Suelta tus imágenes aquí, tamaño máximo 500px * 500px
@@ -578,7 +741,11 @@
 
                         </div>
 
+                        <input type="hidden" name="galeria-producto-old" value='<?php echo $product->gallery_product ?>'>
+
                         <input type="hidden" name="galeria-producto">
+
+                        <input type="hidden" name="delete-galeria-producto">
 
                     </div>
 
@@ -588,7 +755,7 @@
 
                     <div class="form-group mt-2">
 
-                        <label>Video del Producto | Ejem: <strong>Type:</strong> YouTube, <strong>Id:</strong> Sl5FaskVpD4</label> 
+                        <label>Video del Producto | Ejem: <strong>Type:</strong> YouTube, <strong>Id:</strong> Sl5FaskVpD4</label>
 
                         <div class="row mb-3">
 
@@ -596,7 +763,7 @@
 
                                 <div class="input-group-append">
                                     <span class="input-group-text">
-                                        Type:
+                                        Tipo:
                                     </span>
                                 </div>
 
@@ -604,9 +771,27 @@
                                 class="form-control"
                                 name="type_video"
                                 >
-                                    <option value="">Seleccionar Plataforma</option>
-                                    <option value="youtube">YouTube</option>
-                                    <option value="vimeo">Vimeo</option>
+                                    <?php if ($product->video_product != null): ?>
+
+                                        <?php if (json_decode($product->video_product, true)[0] == "youtube"): ?>
+
+                                            <option value="youtube">YouTube</option>
+                                            <option value="vimeo">Vimeo</option>
+
+                                        <?php else: ?>
+
+                                            <option value="vimeo">Vimeo</option>
+                                            <option value="youtube">YouTube</option>
+
+                                        <?php endif ?>
+
+                                    <?php else: ?>
+
+                                        <option value="">Seleccionar Plataforma</option>
+                                        <option value="youtube">YouTube</option>
+                                        <option value="vimeo">Vimeo</option>
+
+                                    <?php endif ?>
 
                                 </select>
 
@@ -627,6 +812,9 @@
                                 pattern="[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\'\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,100}"
                                 maxlength="100"
                                 onchange="validateJS(event,'regex')"
+                                <?php if ($product->video_product != null): ?>
+                                    value="<?php echo json_decode($product->video_product, true)[1] ?>"
+                                <?php endif ?>
                                 >
 
                                 <div class="valid-feedback">Campo Valido.</div>
@@ -676,6 +864,7 @@
                                 pattern="[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\'\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,50}"
                                 maxlength="50"
                                 onchange="validateJS(event,'regex')"
+                                value="<?php echo json_decode($product->top_banner_product, true)["H3 tag"] ?>"
                                 required
                                 >
 
@@ -703,6 +892,7 @@
                                 pattern="[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\'\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,50}"
                                 maxlength="50"
                                 onchange="validateJS(event,'regex')"
+                                value="<?php echo json_decode($product->top_banner_product, true)["P1 tag"] ?>"
                                 required
                                 >
 
@@ -730,6 +920,7 @@
                                 pattern="[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\'\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,50}"
                                 maxlength="50"
                                 onchange="validateJS(event,'regex')"
+                                value="<?php echo json_decode($product->top_banner_product, true)["H4 tag"] ?>"
                                 required
                                 >
 
@@ -757,6 +948,7 @@
                                 pattern="[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\'\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,50}"
                                 maxlength="50"
                                 onchange="validateJS(event,'regex')"
+                                value="<?php echo json_decode($product->top_banner_product, true)["P2 tag"] ?>"
                                 required
                                 >
 
@@ -785,6 +977,7 @@
                                 pattern="[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\'\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,50}"
                                 maxlength="50"
                                 onchange="validateJS(event,'regex')"
+                                value="<?php echo json_decode($product->top_banner_product, true)["Span tag"] ?>"
                                 required
                                 >
 
@@ -813,6 +1006,7 @@
                                 pattern="[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\'\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,50}"
                                 maxlength="50"
                                 onchange="validateJS(event,'regex')"
+                                value="<?php echo json_decode($product->top_banner_product, true)["Button tag"] ?>"
                                 required
                                 >
 
@@ -832,7 +1026,7 @@
                                 <div class="form-group__content">
 
                                     <label class="pb-5" for="topBanner">
-                                    <img src="<?php echo TemplateController::srcImg() ?>views/img/products/default/default-top-banner.jpg" class="img-fluid changeTopBanner">
+                                        <img src="<?php echo TemplateController::srcImg() ?>views/img/products/<?php echo $product->url_category ?>/top/<?php echo json_decode($product->top_banner_product, true)["IMG tag"] ?>" class="img-fluid changeTopBanner">
                                     </label>
 
                                     <div class="custom-file">
@@ -844,7 +1038,7 @@
                                         accept="image/*"
                                         maxSize="2000000"
                                         onchange="validateImageJS(event, 'changeTopBanner')"
-                                        required>
+                                        >
 
                                         <div class="valid-feedback">Campo Valido.</div>
                                         <div class="invalid-feedback">Por favor rellene este campo.</div>
@@ -873,7 +1067,7 @@
                         <div class="form-group__content">
 
                             <label class="pb-5" for="defaultBanner">
-                            <img src="<?php echo TemplateController::srcImg() ?>views/img/products/default/default-banner.jpg" class="img-fluid changeDefaultBanner" style="width:500px">
+                                <img src="<?php echo TemplateController::srcImg() ?>views/img/products/<?php echo $product->url_category ?>/default/<?php echo $product->default_banner_product ?>" class="img-fluid changeDefaultBanner" style="width:500px">
                             </label>
 
                             <div class="custom-file">
@@ -885,7 +1079,7 @@
                                 accept="image/*"
                                 maxSize="2000000"
                                 onchange="validateImageJS(event, 'changeDefaultBanner')"
-                                required>
+                                >
 
                                 <div class="valid-feedback">Campo Valido.</div>
                                 <div class="invalid-feedback">Por favor rellene este campo.</div>
@@ -933,6 +1127,7 @@
                                 pattern="[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\'\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,50}"
                                 maxlength="50"
                                 onchange="validateJS(event,'regex')"
+                                value="<?php echo json_decode($product->horizontal_slider_product, true)["H4 tag"] ?>"
                                 required
                                 >
 
@@ -960,6 +1155,7 @@
                                 pattern="[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\'\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,50}"
                                 maxlength="50"
                                 onchange="validateJS(event,'regex')"
+                                value="<?php echo json_decode($product->horizontal_slider_product, true)["H3-1 tag"] ?>"
                                 required
                                 >
 
@@ -987,6 +1183,7 @@
                                 pattern="[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\'\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,50}"
                                 maxlength="50"
                                 onchange="validateJS(event,'regex')"
+                                value="<?php echo json_decode($product->horizontal_slider_product, true)["H3-2 tag"] ?>"
                                 required
                                 >
 
@@ -1014,6 +1211,7 @@
                                 pattern="[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\'\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,50}"
                                 maxlength="50"
                                 onchange="validateJS(event,'regex')"
+                                value="<?php echo json_decode($product->horizontal_slider_product, true)["H3-3 tag"] ?>"
                                 required
                                 >
 
@@ -1041,6 +1239,7 @@
                                 pattern="[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\'\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,50}"
                                 maxlength="50"
                                 onchange="validateJS(event,'regex')"
+                                value="<?php echo json_decode($product->horizontal_slider_product, true)["H3-4s tag"] ?>"
                                 required
                                 >
 
@@ -1068,6 +1267,7 @@
                                 pattern="[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\'\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,50}"
                                 maxlength="50"
                                 onchange="validateJS(event,'regex')"
+                                value="<?php echo json_decode($product->horizontal_slider_product, true)["Button tag"] ?>"
                                 required
                                 >
 
@@ -1087,7 +1287,7 @@
                                 <div class="form-group__content">
 
                                     <label class="pb-5" for="hSlider">
-                                    <img src="<?php echo TemplateController::srcImg() ?>views/img/products/default/default-horizontal-slider.jpg" class="img-fluid changeHSlider">
+                                        <img src="<?php echo TemplateController::srcImg() ?>views/img/products/<?php echo $product->url_category ?>/horizontal/<?php echo json_decode ($product->horizontal_slider_product, true)["IMG tag"] ?>" class="img-fluid changeHSlider">
                                     </label>
 
                                     <div class="custom-file">
@@ -1099,7 +1299,7 @@
                                         accept="image/*"
                                         maxSize="2000000"
                                         onchange="validateImageJS(event, 'changeHSlider')"
-                                        required>
+                                        >
 
                                         <div class="valid-feedback">Campo Valido.</div>
                                         <div class="invalid-feedback">Por favor rellene este campo.</div>
@@ -1128,20 +1328,20 @@
 
                             <label class="pb-5" for="vSlider">
 
-                                <img src="<?php echo TemplateController::srcImg() ?>views/img/products/default/default-vertical-slider.jpg" class="img-fluid changeVSlider" style="width:260px">
+                                <img src="<?php echo TemplateController::srcImg() ?>views/img/products/<?php echo $product->url_category ?>/vertical/<?php echo $product->vertical_slider_product ?>" class="img-fluid changeVSlider" style="width:260px">
 
                             </label>
 
                             <div class="custom-file">
 
-                                <input type="file" 
-                                class="custom-file-input" 
+                                <input type="file"
+                                class="custom-file-input"
                                 id="vSlider"
                                 name="vSlider"
                                 accept="image/*"
                                 maxSize="2000000"
                                 onchange="validateImageJS(event, 'changeVSlider')"
-                                required>
+                                >
 
                                 <div class="valid-feedback">Campo Valido.</div>
                                 <div class="invalid-feedback">Por favor rellene este campo.</div>
@@ -1181,8 +1381,26 @@
                                 name="type_offer"
                                 onchange="changeOffer(event)">
 
-                                    <option value="Discount">Descuento</option>
-                                    <option value="Fixed">Precio</option>
+                                    <?php if ($product->offer_product != null): ?>
+
+                                        <?php if (json_decode($product->offer_product, true)[0] == "Discount"): ?>
+
+                                            <option value="Discount">Descuento</option>
+                                            <option value="Fixed">Precio</option>
+
+                                        <?php else: ?>
+
+                                            <option value="Fixed">Precio</option>
+                                            <option value="Discount">Descuento</option>
+
+                                        <?php endif ?>
+
+                                    <?php else: ?>
+
+                                        <option value="Discount">Descuento</option>
+                                        <option value="Fixed">Precio</option>
+
+                                    <?php endif ?>
 
                                 </select>
 
@@ -1195,24 +1413,60 @@
                                 TODO: El valor de la oferta
                             ===================================================-->
 
-                            <div class="col-12 col-lg-4 form-group__content input-group mx-0 pr-0">
+                            <div class="col-12 col-lg-4 input-group mx-0 pr-0">
 
-                                <div class="input-group-append">
+                                <?php if ($product->offer_product != null): ?>
 
-                                    <span
-                                    class="input-group-text typeOffer">
-                                        Porcentaje %:
-                                    </span>
+                                    <div class="input-group-append">
 
-                                </div>
+                                        <?php if (json_decode($product->offer_product, true)[0] == "Discount"): ?>
 
-                                <input type="number"
-                                class="form-control"
-                                name="value_offer"
-                                min="0"
-                                step="any"
-                                pattern="[.\\,\\0-9]{1,}"
-                                onchange="validateJS(event, 'numbers')">
+                                            <span
+                                                class="input-group-text typeOffer">
+                                                Porcentaje %:
+                                            </span>
+
+                                        <?php else: ?>
+
+                                            <span
+                                                class="input-group-text typeOffer">
+                                                Precio $:
+                                            </span>
+
+                                        <?php endif ?>
+
+                                    </div>
+
+                                    <input type="number"
+                                    class="form-control"
+                                    name="value_offer"
+                                    min="0"
+                                    step="any"
+                                    pattern="[.\\,\\0-9]{1,}"
+                                    onchange="validateJS(event, 'numbers')"
+                                    value="<?php echo json_decode($product->offer_product, true)[1] ?>">
+
+
+                                <?php else: ?>
+
+                                    <div class="input-group-append">
+
+                                        <span
+                                            class="input-group-text typeOffer">
+                                            Porcentaje %:
+                                        </span>
+
+                                    </div>
+
+                                    <input type="number"
+                                    class="form-control"
+                                    name="value_offer"
+                                    min="0"
+                                    step="any"
+                                    pattern="[.\\,\\0-9]{1,}"
+                                    onchange="validateJS(event, 'numbers')">
+
+                                <?php endif ?>
 
                                 <div class="valid-feedback">Campo Valido.</div>
                                 <div class="invalid-feedback">Por favor rellene este campo.</div>
@@ -1223,7 +1477,7 @@
                                 TODO: Fecha de vencimiento de la oferta
                             ===================================================-->
 
-                            <div class="col-12 col-lg-4 form-group__content input-group mx-0 pr-0">
+                            <div class="col-12 col-lg-4 input-group mx-0 pr-0">
 
                                 <div class="input-group-append">
                                     <span class="input-group-text">
@@ -1231,9 +1485,20 @@
                                     </span>
                                 </div>
 
-                                <input type="date"
-                                class="form-control"
-                                name="date_offer">
+                                <?php if ($product->offer_product != null): ?>
+
+                                    <input type="date"
+                                    class="form-control"
+                                    name="date_offer"
+                                    value="<?php echo json_decode($product->offer_product, true)[2] ?>">
+
+                                <?php else: ?>
+
+                                    <input type="date"
+                                    class="form-control"
+                                    name="date_offer">
+
+                                <?php endif ?>
 
                                 <div class="valid-feedback">Campo Valido.</div>
                                 <div class="invalid-feedback">Por favor rellene este campo.</div>

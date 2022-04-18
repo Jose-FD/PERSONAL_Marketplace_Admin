@@ -4,7 +4,7 @@
         TODO: Zona Horaria
     =============================================*/
 
-    date_default_timezone_set('America/Mexico_City');
+    date_default_timezone_set('America/Lima');
 
     /*=============================================
         TODO: Mostrar errores
@@ -35,6 +35,8 @@
 
     require_once "controllers/template.controller.php";
     require_once "controllers/curl.controller.php";
+
+    require "extensions/vendor/autoload.php";
 
     $index = new TemplateController();
     $index -> index();

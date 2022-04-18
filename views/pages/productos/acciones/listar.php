@@ -93,3 +93,73 @@
 </div>
 
 <script src="views/assets/custom/datatable/datatable.js"></script>
+
+<!-- Modal de FeedBack-->
+<div class="modal" id="myFeedback">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <form method="post" class="needs-validation" novalidate >
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Proceso de Aprobación</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+
+                    <input type="hidden" name="idProduct">
+
+                    <div class="form-group">
+
+                        <div class='custom-control custom-switch'>
+
+                            <input type='checkbox' class='custom-control-input' id="approval_product" name='approval_product'>
+
+                            <label class='custom-control-label' for='approval_product'>Aprovar</label>
+
+                        </div>
+
+                        <hr>
+
+                        <label>Escribe tu feedback</label>
+
+                        <textarea
+                        class="form-control"
+                        name="feedback_product"
+                        pattern='[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\"\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,}'
+                        onchange="validateJS(event,'regex')"
+                        required
+                        ></textarea>
+
+                        <div class="valid-feedback">Campo Valido.</div>
+                        <div class="invalid-feedback">Por favor rellene este campo.</div>
+
+                    </div>
+
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer d-flex justify-content-between">
+
+                <?php
+
+                    require_once "controllers/products.controller.php";
+
+                    $approval = new ProductsController();
+                    $approval -> approval();
+
+                ?>
+
+                <div><button type="button" class="btn btn-light border" data-dismiss="modal">Cerrar</button></div>
+                <div><button type="submit" class="btn btn-dark">Guardar</button></div>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>

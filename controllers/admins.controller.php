@@ -48,7 +48,15 @@
 
                         if($response->results[0]->rol_user != "admin"){
 
-                            echo '<div class="alert alert-danger">No tiene permisos para acceder al sistema</div>';
+                            echo '<script>
+
+                                    matPreloader("off");
+                                    fncSweetAlert("close", "", "");
+
+                                </script>
+
+                                <div class="alert alert-danger">No tiene permisos para acceder al sistema</div>';
+
                             return;
 
                         }

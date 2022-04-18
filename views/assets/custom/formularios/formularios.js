@@ -257,8 +257,6 @@ function changeCategory(event, type) {
 
     if(type == "subcategories"){
 
-        var idCategory = event.target.value;
-
         $(".titleList").show();
 
         var idCategory = event.target.value;
@@ -673,6 +671,34 @@ $(".dropzone").dropzone({
     }
 
 });
+
+/*================================================================
+    TODO: Edición de Galería
+================================================================*/
+
+if($("[name='galeria-producto-old']").length > 0 && $("[name='galeria-producto-old']").val() != ""){
+
+    var arrayFilesOld = JSON.parse($("[name='galeria-producto-old']").val());
+
+}
+
+var arrayFilesDelete = Array();
+
+function removeGallery(elem){
+
+    $(elem).parent().remove();
+
+    var index = arrayFilesOld.indexOf($(elem).attr("remove"));
+
+    arrayFilesOld.splice(index, 1);
+
+    $("[name='galeria-producto-old']").val(JSON.stringify(arrayFilesOld));
+
+    arrayFilesDelete.push($(elem).attr("remove"));
+
+    $("[name='delete-galeria-producto']").val(JSON.stringify(arrayFilesDelete));
+
+}
 
 /*================================================================
     TODO: Elegir tipo de oferta

@@ -48,16 +48,16 @@
 
         <div class="card-header">
 
-            <div class="col-md-8 offset-md-2">
+            <?php
 
-                <?php
+                require_once "controllers/subcategories.controller.php";
 
-                    require_once "controllers/subcategories.controller.php";
+                $create = new SubcategoriesController();
+                $create -> edit($subcategory->id_subcategory);
 
-                    $create = new SubcategoriesController();
-                    $create -> edit($subcategory->id_subcategory);
+            ?>
 
-                ?>
+                <div class="col-md-8 offset-md-2">
 
                     <!--==================================================
                         TODO: Nombre de Subcategoria
@@ -113,28 +113,26 @@
 
                         ?>
 
-                        <div class="form-group">
+                        <div class="form-group my-4__content">
 
                             <select
                                 class="form-control select2"
                                 name="category-subcategory"
                                 style="width:100%"
-                                onchange="changeCategory(event)"
+                                onchange="changeCategory(event, 'subcategories')"
                                 required>
 
                                 <?php foreach ($categories as $key => $value): ?>
 
-                                <?php if ($value->id_category == $subcategory->id_category_subcategory): ?>
+                                    <?php if ($value->id_category == $subcategory->id_category_subcategory): ?>
 
-                                    <option value="<?php echo $subcategory->id_category_subcategory ?>" selected>
-                                        <?php echo $subcategory->name_category ?></option>
+                                        <option value="<?php echo $subcategory->id_category_subcategory ?>" selected><?php echo $subcategory->name_category ?></option>
 
-                                <?php else: ?>
+                                    <?php else: ?>
 
-                                    <option value="<?php echo $value->id_category ?>"><?php echo $value->name_category ?>
-                                    </option>
+                                        <option value="<?php echo $value->id_category ?>"><?php echo $value->name_category ?></option>
 
-                                <?php endif ?>
+                                    <?php endif ?>
 
                                 <?php endforeach ?>
 
@@ -157,12 +155,15 @@
 
                         <div class="form-group__content">
 
-                        <select class="form-control" name="titleList-subcategory" required>
+                            <select
+                            class="form-control"
+                            name="titleList-subcategory"
+                            required>
 
-                            <option class="optTitleList" value="<?php echo $subcategory->title_list_subcategory ?>">
-                                <?php echo $subcategory->title_list_subcategory ?></option>
+                                <option class="optTitleList" value="<?php echo $subcategory->title_list_subcategory ?>">
+                                    <?php echo $subcategory->title_list_subcategory ?></option>
 
-                        </select>
+                            </select>
 
                             <div class="valid-feedback">Valid.</div>
                             <div class="invalid-feedback">Please fill out this field.</div>
