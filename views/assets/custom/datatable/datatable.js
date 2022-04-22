@@ -175,6 +175,109 @@ if($(".tableProducts").length > 0){
 }
 
 /*=====================================================================
+    TODO: Validamos tabla de Órdenes
+=====================================================================*/
+
+if($(".tableOrders").length > 0){
+
+    var url = "ajax/data-orders.php?text="+text+"&between1="+$("#between1").val()+"&between2="+$("#between2").val()+"&idAdmin="+$("#idAdmin").val();
+
+    var columns = [
+        { "data": "id_order" },
+        { "data": "status_order"},
+        { "data": "displayname_user"},
+        { "data": "email_order" },
+        { "data": "country_order" },
+        { "data": "city_order" },
+        { "data": "address_order", "orderable": false  },
+        { "data": "phone_order", "orderable": false  },
+        { "data": "name_product" },
+        { "data": "quantity_order" },
+        { "data": "details_order", "orderable": false  },
+        { "data": "price_order" },
+        { "data": "process_order", "orderable": false  },
+        { "data": "date_created_order" }
+    ];
+
+    page = "ordenes";
+
+}
+
+/*=====================================================================
+    TODO: Validamos tabla de Ventas
+=====================================================================*/
+
+if($(".tableSales").length > 0){
+
+    var url = "ajax/data-sales.php?text="+text+"&between1="+$("#between1").val()+"&between2="+$("#between2").val()+"&idAdmin="+$("#idAdmin").val();
+
+    var columns = [
+        { "data": "id_sale" },
+        { "data": "status_sale"},
+        { "data": "commission_sale"},
+        { "data": "unit_price_sale" },
+        { "data": "total_sale" },
+        { "data": "name_store" },
+        { "data": "email_order" },
+        { "data": "name_product_sale" },
+        { "data": "quantity_order" },
+        { "data": "payment_method_sale" },
+        { "data": "id_payment_sale" },
+        { "data": "date_created_sale" }
+    ];
+
+    page = "ventas";
+
+}
+
+/*=====================================================================
+    TODO: Validamos tabla de Ventas
+=====================================================================*/
+
+if($(".tableDisputes").length > 0){
+
+    var url = "ajax/data-disputes.php?text="+text+"&between1="+$("#between1").val()+"&between2="+$("#between2").val()+"&idAdmin="+$("#idAdmin").val();
+
+    var columns = [
+        { "data": "id_dispute" },
+        { "data": "name_store"},
+        { "data": "displayname_user"},
+        { "data": "email_user" },
+        { "data": "content_dispute", "orderable": false },
+        { "data": "answer_dispute", "orderable": false },
+        { "data": "date_answer_dispute" },
+        { "data": "date_created_dispute" }
+    ];
+
+    page = "disputas";
+
+}
+
+/*=====================================================================
+    TODO: Validamos tabla de Mensajes
+=====================================================================*/
+
+if($(".tableMessages").length > 0){
+
+    var url = "ajax/data-messages.php?text="+text+"&between1="+$("#between1").val()+"&between2="+$("#between2").val()+"&idAdmin="+$("#idAdmin").val();
+
+    var columns = [
+        { "data": "id_message" },
+        { "data": "name_store"},
+        { "data": "name_product"},
+        { "data": "displayname_user"},
+        { "data": "email_user" },
+        { "data": "content_message", "orderable": false },
+        { "data": "answer_message", "orderable": false },
+        { "data": "date_answer_message" },
+        { "data": "date_created_message" }
+    ];
+
+    page = "mensajes";
+
+}
+
+/*=====================================================================
     TODO: Ejecutamos DataTable
 =====================================================================*/
 
@@ -491,4 +594,220 @@ $(document).on("click",".feedback", function(){
 
     $("#myFeedback").modal();
 
+})
+
+/*================================================================
+    TODO: Función para actualizar la orden
+================================================================*/
+
+$(document).on("click", ".nextProcess", function(){
+
+    /*================================================================
+        TODO: Limpiamos la ventana modal
+    ================================================================*/
+
+    $(".orderBody").html("");
+
+    var idOrder = $(this).attr("idOrder");
+    var processOrder = JSON.parse(atob($(this).attr("processOrder")));
+
+    /*================================================================
+        TODO: Nombramos la ventana modal con el id de la orden
+    ================================================================*/
+
+    $(".modal-title span").html("Order N. "+idOrder);
+
+    /*==============================================================================================
+        TODO: Quitamos la opción de llenar el campo de recibido si no se ha enviado el producto
+    ==============================================================================================*/
+
+        if(processOrder[1].status == "pending"){
+
+            processOrder.splice(2,1);
+
+        }
+
+    /*================================================================
+        TODO: Información dinámica que aparecerá en la ventana modal
+    ================================================================*/
+
+    processOrder.forEach((value,index)=>{
+
+        let date = "";
+        let status = "";
+        let comment = "";
+
+        if(value.status == "ok"){
+
+        date = `<div class="col-10 p-3">
+
+                    <input type="date" class="form-control" value="`+value.date+`" readonly>
+
+                </div>`;
+
+        status = `<div class="col-10 mt-1 p-3">
+
+                    <div class="text-uppercase">`+value.status+`</div>
+
+                </div>`;
+
+        comment = `<div class="col-10 p-3">
+
+                        <textarea class="form-control" readonly>`+value.comment+`</textarea>
+
+                    </div>`;
+
+        }else{
+
+            date = `<div class="col-10 p-3">
+
+                        <input type="date" class="form-control" name="date" value="`+value.date+`" required>
+
+                    </div>`;
+
+
+            status = `<div class="col-10 mt-1 p-3">
+
+                        <input type="hidden" name="stage" value="`+value.stage+`">
+                        <input type="hidden" name="processOrder" value="`+$(this).attr("processOrder")+`">
+                        <input type="hidden" name="idOrder" value="`+idOrder+`">
+                        <input type="hidden" name="clientOrder" value="`+$(this).attr("clientOrder")+`">
+                        <input type="hidden" name="emailOrder" value="`+$(this).attr("emailOrder")+`">
+                        <input type="hidden" name="productOrder" value="`+$(this).attr("productOrder")+`">
+
+                        <div class="custom-control custom-radio custom-control-inline">
+
+                            <input
+                                id="status-pending"
+                                type="radio"
+                                class="custom-control-input"
+                                value="pending"
+                                name="status"
+                                checked>
+
+                            <label  class="custom-control-label" for="status-pending">Pending</label>
+
+                        </div>
+
+                        <div class="custom-control custom-radio custom-control-inline">
+
+                            <input
+                                id="status-ok"
+                                type="radio"
+                                class="custom-control-input"
+                                value="ok"
+                                name="status"
+                                >
+
+                            <label  class="custom-control-label" for="status-ok">Ok</label>
+
+                        </div>
+
+                    </div>`;
+
+            comment = `<div class="col-10 p-3">
+
+                            <textarea class="form-control" name="comment" required>`+value.comment+`</textarea>
+
+                        </div>`;
+
+        }
+
+
+        $(".orderBody").append(`
+
+            <div class="card-header text-uppercase">`+value.stage+`</div>
+
+            <div class="card-body">
+
+                <!--=====================================
+                Bloque Fecha
+                ======================================-->
+
+                <div class="form-row">
+
+                    <div class="col-2 text-right">
+
+                        <label class="p-3 lead">Date:</label>
+
+                    </div>
+
+                    `+date+`
+
+                </div>
+
+                <!--=====================================
+                Bloque Status
+                ======================================-->
+
+                <div class="form-row">
+
+                    <div class="col-2 text-right">
+                        <label class="p-3 lead">Status:</label>
+                    </div>
+
+                    `+status+`
+
+                </div>
+
+                <!--=====================================
+                    Bloque Comentarios
+                ======================================-->
+
+                <div class="form-row">
+
+                    <div class="col-2 text-right">
+                        <label class="p-3 lead">Comment:</label>
+                    </div>
+
+                    `+comment+`
+
+                </div>
+
+            </div>
+
+        `)
+
     })
+
+    $("#nextProcess").modal()
+
+
+    })
+
+/*================================================================
+    TODO: Función para responder disputa
+================================================================*/
+
+$(document).on("click", ".answerDispute", function(){
+
+    $("[name='idDispute']").val($(this).attr("idDispute"));
+    $("[name='clientDispute']").val($(this).attr("clientDispute"));
+    $("[name='emailDispute']").val($(this).attr("emailDispute"));
+
+    /*================================================================
+        TODO: Aparecemos la ventana Modal
+    ================================================================*/
+
+    $("#answerDispute").modal()
+
+})
+
+/*================================================================
+    TODO: Función para responder mensaje
+================================================================*/
+
+$(document).on("click", ".answerMessage", function(){
+
+    $("[name='idMessage']").val($(this).attr("idMessage"));
+    $("[name='clientMessage']").val($(this).attr("clientMessage"));
+    $("[name='emailMessage']").val($(this).attr("emailMessage"));
+    $("[name='urlProduct']").val($(this).attr("urlProduct"));
+
+    /*================================================================
+        TODO: Aparecemos la ventana Modal
+    ================================================================*/
+
+    $("#answerMessage").modal()
+
+})
