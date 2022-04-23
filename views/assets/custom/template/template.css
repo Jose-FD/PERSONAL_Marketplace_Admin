@@ -7,3 +7,9 @@
 
 	padding-bottom: 30px !important;
 }
+
+table.dataTable thead {
+    background: linear-gradient(to right, #fcaf1f, #ffa600);
+    /* background: linear-gradient(to right, #fcb045, #fd1d1d, #833ab4); */
+    color:white;
+}

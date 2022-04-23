@@ -111,6 +111,12 @@
                         <i class="nav-icon fas fa-comment-alt"></i>
                         <p>
                             Disputas
+
+                            <?php if ($totalDispute>0): ?>
+
+                                <span class="badge badge-info right"><?php echo $totalDispute ?></span>
+
+                            <?php endif ?>
                         </p>
                     </a>
                 </li>
@@ -120,6 +126,12 @@
                         <i class="nav-icon fas fa-comments"></i>
                         <p>
                             Mensajes
+
+                            <?php if ($totalMessage>0): ?>
+
+                                <span class="badge badge-danger right"><?php echo $totalMessage ?></span>
+
+                            <?php endif ?>
                         </p>
                     </a>
                 </li>

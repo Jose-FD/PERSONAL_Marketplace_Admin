@@ -1,3 +1,69 @@
+<?php
+
+    /*=====================================================================
+        TODO: Mensajes sin responder
+    =====================================================================*/
+
+    $url = "relations?rel=messages,stores&type=message,store&select=answer_message&linkTo=id_user_store&equalTo=".$_SESSION["admin"]->id_user;
+    $method = "GET";
+    $fields = array();
+    $messages = CurlController::request($url,$method,$fields);
+
+    if($messages->status == 200){
+
+        $messages = $messages->results;
+
+    }else{
+
+        $messages = array();
+
+    }
+
+    $totalMessage = 0;
+
+    foreach ($messages as $key => $value) {
+
+        if($value->answer_message == null){
+
+            $totalMessage++;
+
+        }
+
+    }
+
+    /*=====================================================================
+        TODO: Disputas sin responder
+    =====================================================================*/
+
+    $url = "relations?rel=disputes,stores&type=dispute,store&select=answer_dispute&linkTo=id_user_store&equalTo=".$_SESSION["admin"]->id_user;
+    $method = "GET";
+    $fields = array();
+    $disputes = CurlController::request($url,$method,$fields);
+
+    if($disputes->status == 200){
+
+        $disputes = $disputes->results;
+
+    }else{
+
+        $disputes = array();
+
+    }
+
+    $totalDispute = 0;
+
+    foreach ($disputes as $key => $value) {
+
+        if($value->answer_dispute == null){
+
+            $totalDispute++;
+
+        }
+
+    }
+
+?>
+
 <nav class="main-header navbar navbar-expand navbar-warning navbar-light">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
@@ -12,17 +78,25 @@
         <!-- Messages Dropdown Menu -->
         <li class="nav-item dropdown">
 
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="/messages">
                 <i class="far fa-comments"></i>
-                <span class="badge badge-danger navbar-badge">3</span>
+
+                <?php if ($totalMessage>0): ?>
+                    <span class="badge badge-danger navbar-badge"><?php echo $totalMessage ?></span>
+                <?php endif ?>
+
             </a>
 
         </li>
         <!-- Notifications Dropdown Menu -->
         <li class="nav-item dropdown">
-            <a class="nav-link" href="#">
-                <i class="far fa-bell"></i>
-                <span class="badge badge-warning navbar-badge">15</span>
+            <a class="nav-link"  href="/disputes">
+            <i class="far fa-bell"></i>
+
+            <?php if ($totalDispute>0): ?>
+                <span class="badge badge-dark navbar-badge"><?php echo $totalDispute ?></span>
+            <?php endif ?>
+
             </a>
 
         </li>

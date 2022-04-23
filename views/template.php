@@ -141,6 +141,12 @@
 
     <?php endif ?>
 
+    <!-- Chart -->
+    <script src="views/assets/plugins/chart/js/Chart.min.js"></script>
+
+    <!-- jQuery Knob Chart -->
+    <script src="views/assets/plugins/jquery-knob/jquery.knob.min.js"></script>
+
     <script src="views/assets/custom/alerts/alerts.js"></script>
 
 </head>
